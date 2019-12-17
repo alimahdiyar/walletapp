@@ -132,6 +132,11 @@ class _AuthScreenState extends State<AuthScreen> {
           prefs.setString('userData', userData);
         } else if (responseData['detail'] == 'Invalid verification code') {
           _showAlertDialog('لطفا کد معتبر وارد کنید');
+        } else if (responseData['detail'] == 'Phone number not found') {
+          _showAlertDialog('کد تایید منقضی شده است');
+          setState(() {
+            _authMode = AuthMode.SendCode;
+          });
         } else {
           _showAlertDialog('لطفا ورودی خود را کنترل کنید');
         }

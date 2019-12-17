@@ -77,42 +77,28 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  Widget buildTopMenu(BuildContext context) {
+
+  Widget buildTransactionContainer(Transaction transaction) {
     return Container(
+      margin: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10.0,
-            spreadRadius: 0.1,
-            offset: Offset(2, 2),
-          ),
+              color: Colors.black26,
+//              offset: Offset(5,2),
+            blurRadius: 5.0,
+          )
         ],
-        borderRadius: BorderRadius.circular(100.0),
         color: Colors.white,
       ),
-      height: 40.0,
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: Row(
-//                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: <Widget>[
-          buildTabItem(
-            "منو",
-            0,
-          ),
-          buildTabItem(
-            "اطلاعات",
-            1,
-          ),
+          Text(transaction.amount.toString() + (transaction.isIncome ? '+' : '-')),
+          Text(transaction.reason)
         ],
       ),
     );
-  }
-
-  Widget buildTransactionContainer(Transaction transaction) {
-    return Text(transaction.reason);
   }
 
   void _onPageViewChange(int page) {
