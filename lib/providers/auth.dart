@@ -6,15 +6,32 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Auth with ChangeNotifier {
-  String _token = "892e5ccee88e85a3d3034a3c1ea2836f782c6b5d"; //Debugging
+  String _token; //Debugging
   bool get isAuth {
     return token != null;
+  }
+
+  set token (newToken) {
+    _token = newToken;
+    notifyListeners();
   }
 
   String get token {
       return _token;
   }
 
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    }
+    final extractedUserData = json.decode(prefs.getString('userData')) as Map<String, Object>;
+
+    _token = extractedUserData['token'];
+    notifyListeners();
+    return true;
+  }
 
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {

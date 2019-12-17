@@ -2,6 +2,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:walletapp/providers/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:walletapp/screens/splash_screen.dart';
 
 import './providers/auth.dart';
 import './screens/auth_screen.dart';
@@ -35,7 +36,15 @@ class MyApp extends StatelessWidget {
           ],
           locale: Locale("fa", "IR"),
           title: 'walletapp',
-          home: auth.isAuth ? UserProfileScreen() : AuthScreen(),
+          home: auth.isAuth ? UserProfileScreen()
+              : FutureBuilder(
+            future: auth.tryAutoLogin(),
+            builder: (ctx, authResultSnapshot) =>
+            authResultSnapshot.connectionState ==
+                ConnectionState.waiting
+                ? SplashScreen()
+                : AuthScreen(),
+          ),
         ),
       ),
     );
