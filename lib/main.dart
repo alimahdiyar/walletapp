@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Auth>(
           create: (_) => Auth(),
         ),
-        ChangeNotifierProxyProvider<Auth, UserProfile>(
-          create: (_) => UserProfile(),
+        ChangeNotifierProxyProvider<Auth, UserProfileProvider>(
+          create: (_) => UserProfileProvider(),
           update: (ctx, auth, userProfile) =>
               userProfile..authToken = auth.token,
         ),
